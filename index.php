@@ -38,8 +38,8 @@
             border-radius: 5px;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
             text-align: center;
-            max-width: 950px; /* Set width of the description box */
-            width: 100%; /* Ensures it fits within the max-width */
+            max-width: 950px; 
+            width: 100%; 
         }
 
         p {

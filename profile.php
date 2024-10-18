@@ -1,31 +1,31 @@
 <?php
-// Include the database connection
-include 'dbconnection.php'; // Ensure this is the correct path
 
-session_start(); // Start the session
+include 'dbconnection.php';
 
-// Enable error reporting
+session_start(); 
+
+
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
-// Check if user is logged in
+
 if (!isset($_SESSION['username'])) {
-    header('Location: dashboard.php'); // Redirect to dashboard if user is not logged in
-    exit(); // Exit to prevent further execution
+    header('Location: dashboard.php'); 
+    exit(); 
 }
 
-// Fetch user data, transactions, and investments
-$username = $_SESSION['username']; // Use 'username' instead of 'user_id'
 
-// Initialize variables
+$username = $_SESSION['username']; 
+
+
 $user = [];
 $transactions = [];
 $investments = [];
 
-// Fetch user information, transactions, and investments
+
 try {
-    // Fetch user information
+    
     $stmt = $pdo->prepare("SELECT id, username, email, contact_number FROM Users WHERE username = :username");
     $stmt->execute(['username' => $username]);
     $user = $stmt->fetch(PDO::FETCH_ASSOC);

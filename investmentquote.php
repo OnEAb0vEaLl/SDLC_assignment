@@ -1,11 +1,11 @@
 <?php
-// Database connection
-$host = 'localhost'; // Change this if your database is hosted elsewhere
-$db = 'FinanceForge';
-$user = 'root'; // Change this to your database username
-$pass = ''; // Change this to your database password
 
-// Create a new PDO instance
+$host = 'localhost'; 
+$db = 'FinanceForge';
+$user = 'root'; 
+$pass = ''; 
+
+
 try {
     $pdo = new PDO("mysql:host=$host;dbname=$db", $user, $pass);
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -22,9 +22,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $predicted_returns = $_POST['predicted_returns'];
     $fees = $_POST['fees'];
 
-    // Insert or update investment data
+    
     if ($id) {
-        // Update existing investment
+        
         $stmt = $pdo->prepare("UPDATE InvestmentPlan SET min_initial_investment = ?, min_monthly_investment = ?, option_name = ?, predicted_returns = ?, fees = ? WHERE id = ?");
         $stmt->execute([$min_initial_investment, $min_monthly_investment, $option_name, $predicted_returns, $fees, $id]);
     } else {
@@ -33,8 +33,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $stmt->execute([$min_initial_investment, $min_monthly_investment, $option_name, $predicted_returns, $fees]);
     }
 
-    // Redirect to dashboard or display a success message
-    header("Location: dashboard.php"); // Change to the appropriate dashboard file
+   
+    header("Location: dashboard.php"); 
     exit;
 }
 
@@ -197,7 +197,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     maxReturn = minReturn = totalFees = 0;
             }
 
-            // Store investment data for submission
+            
             investmentData.option_name = investmentType;
             investmentData.max_investment = initialLumpSum;
             investmentData.min_monthly_investment = monthlyAmount;
@@ -205,7 +205,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             investmentData.predicted_returns = `£${((maxReturn + minReturn) / 2).toFixed(2)}`;
             investmentData.fees = totalFees;
 
-            // Construct the quote details
+           
             const quoteDetails = `
                 <strong>Investment Amount:</strong> £${initialLumpSum.toFixed(2)}<br>
                 <strong>Monthly Investment:</strong> £${monthlyAmount.toFixed(2)}<br>
@@ -213,16 +213,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <strong>Total Fees:</strong> £${totalFees.toFixed(2)}<br>
             `;
 
-            // Display quote details
+           
             document.getElementById('quote-details').innerHTML = quoteDetails;
         }
 
-        // Add hidden inputs to the form for submission
+       
         document.getElementById('investment-form').addEventListener('submit', function(event) {
-            // Ensure there's investment data before submitting
+            
             if (!investmentData.predicted_returns) {
                 alert("Please get a quote before submitting the form.");
-                event.preventDefault(); // Prevent form submission
+                event.preventDefault(); 
                 return;
             }
 
@@ -235,7 +235,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             const hiddenFeesInput = document.createElement('input');
             hiddenFeesInput.type = 'hidden';
             hiddenFeesInput.name = 'fees';
-            hiddenFeesInput.value = investmentData.fees; // Ensure 'totalFees' is accessible here
+            hiddenFeesInput.value = investmentData.fees; 
             this.appendChild(hiddenFeesInput);
         });
     </script>

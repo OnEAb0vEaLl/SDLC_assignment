@@ -1,17 +1,17 @@
 <?php
-// Include the database connection file
+
 require_once 'dbconnection.php';
 
 try {
-    // Fetch investment plans from the database
+    
     $query = "SELECT * FROM InvestmentQuote";
-    $stmt = $pdo->prepare($query); // Prepare the statement
-    $stmt->execute(); // Execute the prepared statement
-    $investmentPlans = $stmt->fetchAll(PDO::FETCH_ASSOC); // Fetch all results as an associative array
+    $stmt = $pdo->prepare($query); 
+    $stmt->execute(); 
+    $investmentPlans = $stmt->fetchAll(PDO::FETCH_ASSOC); 
 } catch (PDOException $e) {
-    // Handle any query errors
-    error_log("Query failed: " . $e->getMessage()); // Log the error for debugging
-    die("Query failed: " . $e->getMessage()); // Display a user-friendly message
+   
+    error_log("Query failed: " . $e->getMessage()); 
+    die("Query failed: " . $e->getMessage()); 
 }
 ?>
 
@@ -25,17 +25,17 @@ try {
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-color: #e9f7ff; /* Light blue background */
+            background-color: #e9f7ff;
             margin: 0;
             padding: 20px;
         }
         header {
-            background-color: #007bff; /* Primary color */
+            background-color: #007bff; 
             color: white;
             padding: 15px 20px;
             display: flex;
             align-items: center;
-            justify-content: flex-start; /* Align items to the left */
+            justify-content: flex-start; 
         }
         .logo {
             width: 50px;
@@ -47,16 +47,15 @@ try {
         }
         .nav-link {
             color: white; 
-            transition: background-color 0.3s; /* Smooth transition for hover effect */
-        }
+            transition: background-color 0.3s; 
 
         .nav-link:hover {
-            background-color: rgba(255, 255, 255, 0.1); /* Lighten background on hover */
+            background-color: rgba(255, 255, 255, 0.1); 
             text-decoration: none; 
         }
 
         .navbar {
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Add shadow to navbar */
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); 
         }
         h2 {
             color: #007bff; /* Primary color */
@@ -163,5 +162,5 @@ try {
 </html>
 
 <?php
-// Close the database connection (not needed for PDO since it closes automatically)
+
 ?>

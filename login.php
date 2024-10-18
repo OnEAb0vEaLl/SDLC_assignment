@@ -1,37 +1,37 @@
 <?php
-session_start(); // Start the session
-include 'dbconnection.php'; // Include your database connection file
+session_start(); 
+include 'dbconnection.php'; 
 
-$login_error = ''; // Initialize login error variable
+$login_error = ''; 
 
-// Check if form is submitted
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $username = trim($_POST['username']);
     $password = trim($_POST['password']);
 
-    // Prepare the SQL statement
+    
     $stmt = $pdo->prepare("SELECT password FROM Users WHERE username = :username");
     $stmt->bindParam(':username', $username);
     $stmt->execute();
 
-    // Check if username exists
+    
     if ($stmt->rowCount() > 0) {
-        $hashed_password = $stmt->fetchColumn(); // Fetch the hashed password
+        $hashed_password = $stmt->fetchColumn(); 
 
         // Verify the password
         if (password_verify($password, $hashed_password)) {
             // Successful login
-            $_SESSION['username'] = $username; // Store username in session
-            header("Location: dashboard.php"); // Redirect to dashboard
+            $_SESSION['username'] = $username; 
+            header("Location: dashboard.php"); 
             exit();
         } else {
-            $login_error = "Invalid password."; // Incorrect password
+            $login_error = "Invalid password."; 
         }
     } else {
-        $login_error = "Username not found."; // Username not found
+        $login_error = "Username not found."; 
     }
 
-    // No need to close the PDO connection, it's closed automatically when the script ends.
+   
 }
 ?>
 
@@ -45,35 +45,35 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     <style>
         body {
-            background-color: #e9f7ff; /* Light blue background */
+            background-color: #e9f7ff; 
             font-family: Arial, sans-serif;
         }
 
         header {
-            background-color: #007bff; /* Blue background for the header */
-            color: white; /* White text color */
-            padding: 15px 20px; /* Padding for the header */
+            background-color: #007bff; 
+            color: white; 
+            padding: 15px 20px; 
             display: flex;
             align-items: center;
         }
 
         header .logo {
-            width: 50px; /* Logo width */
-            margin-right: 15px; /* Space between logo and title */
+            width: 50px; 
+            margin-right: 15px; 
         }
 
         h2 {
-            color: #343a40; /* Dark gray text for the heading */
-            text-align: center; /* Center align heading */
-            margin-top: 20px; /* Margin above heading */
+            color: #343a40; 
+            text-align: center; 
+            margin-top: 20px; 
         }
 
         .form-group {
-            margin-bottom: 20px; /* Space between form groups */
+            margin-bottom: 20px; 
         }
 
         .btn {
-            margin: 0 10px; /* Space between buttons */
+            margin: 0 10px;
         }
 
         .text-danger {
@@ -90,7 +90,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     <h2>Login</h2>
 
-    <!-- Display login error message if exists -->
+   
     <?php if ($login_error): ?>
     <div class="alert alert-danger text-center" role="alert">
         <?php echo $login_error; ?>

@@ -1,10 +1,10 @@
 <?php
-include 'dbconnection.php'; // Include your database connection file
+include 'dbconnection.php'; 
 
 $errors = [];
 $success = false;
 
-// Check if form is submitted
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $username = trim($_POST['username']);
     $email = trim($_POST['email']);
@@ -34,9 +34,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $errors['password'] = "Password must be at least 6 characters long.";
     }
 
-    // If no errors, proceed to register the user
+   
     if (empty($errors)) {
-        $hashed_password = password_hash($password, PASSWORD_DEFAULT); // Hash the password
+        $hashed_password = password_hash($password, PASSWORD_DEFAULT); 
 
         try {
             // Prepare and execute the statement
@@ -45,7 +45,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
             $success = true; // Registration successful
         } catch (PDOException $e) {
-            $errors['general'] = "Registration failed: " . $e->getMessage(); // Display error message
+            $errors['general'] = "Registration failed: " . $e->getMessage(); 
         }
     }
 }
@@ -106,7 +106,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     <h2>Register</h2>
 
-    <!-- Success Alert -->
+   
     <?php if ($success): ?>
     <div class="alert alert-success alert-dismissible fade show" role="alert" id="success-alert">
         Registration successful! You can now log in.
@@ -116,7 +116,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     </div>
     <?php endif; ?>
 
-    <!-- General Error Alert -->
+    
     <?php if (!empty($errors['general'])): ?>
     <div class="alert alert-danger alert-dismissible fade show" role="alert">
         <?php echo $errors['general']; ?>
@@ -162,18 +162,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <a href="index.php" class="btn btn-secondary">Back to Home</a>
     </div>
 
-    <!-- Optional JavaScript; choose one of the two! -->
-    <!-- Option 1: jQuery and Bootstrap Bundle (includes Popper) -->
+   
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
     
     <script>
         document.addEventListener("DOMContentLoaded", function() {
-            // Check if the success alert is present
+            
             const successAlert = document.getElementById('success-alert');
             if (successAlert) {
-                // Show a JavaScript alert
+                
                 alert(successAlert.innerText);
             }
         });
