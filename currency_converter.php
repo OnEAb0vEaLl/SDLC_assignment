@@ -1,15 +1,15 @@
 <?php
-// Include the database connection
+
 include 'dbconnection.php';
 
-// Initialize variables
+
 $result_message = '';
 $transactions = [];
 
-// Function to get real-time conversion rates
+
 function getConversionRates($baseCurrency) {
-    $apiKey = 'YOUR_API_KEY'; // Replace with your actual API key
-    $url = "https://api.exchangerate-api.com/v4/latest/$baseCurrency"; // Modify according to the API documentation
+    $apiKey = 'YOUR_API_KEY'; 
+    $url = "https://api.exchangerate-api.com/v4/latest/$baseCurrency"; /
 
     $response = file_get_contents($url);
     if ($response === FALSE) {
@@ -19,26 +19,26 @@ function getConversionRates($baseCurrency) {
     return json_decode($response, true)['rates'];
 }
 
-// Handle form submission
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $currency_from = $_POST['currency_from'];
     $currency_to = $_POST['currency_to'];
     $amount = $_POST['amount'];
 
-    // Fetch real-time conversion rates
+  
     $conversion_rates = getConversionRates($currency_from);
 
-    // Perform conversion
+    
     if (isset($conversion_rates[$currency_to])) {
         $converted_amount = $amount * $conversion_rates[$currency_to];
         $conversion_rate = $conversion_rates[$currency_to];
         $result_message = "$amount $currency_from = " . number_format($converted_amount, 2) . " $currency_to (Rate: $conversion_rate)";
 
-        // Record the transaction in the database
-        $user_id = 1; // Replace with the actual user ID (this should come from your user session)
-        $transaction_type = 'Conversion'; // Define the transaction type
+        
+        $user_id = 1; 
+        $transaction_type = 'Conversion'; 
 
-        // Record the transaction in the database
+        
         $stmt = $pdo->prepare("INSERT INTO Transactions (currency_from, currency_to, amount, converted_amount, conversion_rate, user_id, transaction_type) VALUES (?, ?, ?, ?, ?, ?, ?)");
         $stmt->execute([$currency_from, $currency_to, $amount, $converted_amount, $conversion_rate, $user_id, $transaction_type]);
     } else {
@@ -46,7 +46,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 
-// Fetch transaction history
+
 try {
     $stmt = $pdo->query("SELECT * FROM Transactions ORDER BY transaction_date DESC");
     $transactions = $stmt->fetchAll(PDO::FETCH_ASSOC);
