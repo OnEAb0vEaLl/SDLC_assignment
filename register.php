@@ -11,7 +11,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $contact_number = trim($_POST['contact_number']);
     $password = trim($_POST['password']);
 
-    // Simple validations
+  
     if (empty($username)) {
         $errors['username'] = "Username is required.";
     }
@@ -39,11 +39,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $hashed_password = password_hash($password, PASSWORD_DEFAULT); 
 
         try {
-            // Prepare and execute the statement
+          
             $stmt = $pdo->prepare("INSERT INTO Users (username, password, contact_number, email) VALUES (?, ?, ?, ?)");
             $stmt->execute([$username, $hashed_password, $contact_number, $email]);
 
-            $success = true; // Registration successful
+            $success = true; 
         } catch (PDOException $e) {
             $errors['general'] = "Registration failed: " . $e->getMessage(); 
         }
